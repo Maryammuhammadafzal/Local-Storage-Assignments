@@ -1,41 +1,53 @@
-// import 'sweetalert2/src/sweetalert2.scss';
+//Array of User Data 
+var user_data = [];
+
 // Functions
 function submit(){
-    var submitBtn = document.getElementById('submit-btn');
-    
+var submitBtn = document.getElementById('submit-btn');
 
-    submitBtn.addEventListener('click' , function(){
-        var userName = document.getElementById('form3Example1c').value;
-        var userEmail = document.getElementById('form3Example3c').value;
-       
-        var storedName = localStorage.setItem('userName' , JSON.stringify(userName));
-        var storedEmail = localStorage.setItem('userEmail' , JSON.stringify(userEmail));
-       
-        Swal.fire({
-            template: "#my-template",
-            savePasswoed :function (){
-                var saveBtn = document.getElementsByClassName('swal2-confirm swal2-styled');
-               
-                        saveBtn.addEventListener('click' , function(){
-                            var userpass = document.getElementById('form3Example4c').value;
-                            var repeatPass = document.getElementById('form3Example4cd').value;
-                            
-                            var storedPassword = sessionStorage.setItem('userPass' , JSON.stringify(userpass));
-                            var storedRepeatPassword = sessionStorage.setItem('repeatPass' , JSON.stringify(repeatPass));  
-                        })
-                
-            }
-            
-        });
-        
-    })
-     
+submitBtn && submitBtn.addEventListener('click' , function(){
+    var userName = document.getElementById('form3Example1c').value;
+    var userEmail = document.getElementById('form3Example3c').value;
+    var userpass = document.getElementById('form3Example4c').value;
+    var repeatPass = document.getElementById('form3Example4cd').value;
+
+    var userObj = {
+        name : userName,
+        email : userEmail,
+        password : userpass,
+        repeatPassword : repeatPass
+    }
+
+    user_data.push(userObj);
+
+    
+    userName = '';
+    userEmail = '';
+    userpass = '';
+    repeatPass = '';
+    
+    localStorage.setItem('user data' , JSON.stringify(user_data));
+    
+    window.location.href = "./login.html";
+})
 }
 
 submit();
 
-   
-   
-   
-      
+function login(){
+    var loginBtn = document.getElementById('signin-btn');
     
+    loginBtn && loginBtn.addEventListener('click' , function(){
+        var loginEmail = document.getElementById('loginEmail').value;
+        var loginpass = document.getElementById('loginPassword').value;
+    
+        
+       
+        loginEmail = '';
+        loginpass = '';
+        
+        localStorage.setItem('user data' , JSON.stringify(user_data));
+        
+        window.location.href = "./login.html";
+    })
+    }
