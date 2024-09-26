@@ -2,35 +2,40 @@
 var user_data = [];
 
 // Functions
-function submit(){
 var submitBtn = document.getElementById('submit-btn');
+function submit(){
 
 submitBtn && submitBtn.addEventListener('click' , function(){
-    var userName = document.getElementById('form3Example1c').value;
-    var userEmail = document.getElementById('form3Example3c').value;
-    var userpass = document.getElementById('form3Example4c').value;
-    var repeatPass = document.getElementById('form3Example4cd').value;
+    var userName = document.getElementById('form3Example1c');
+    var userEmail = document.getElementById('form3Example3c');
+    var userpass = document.getElementById('form3Example4c');
+    var repeatPass = document.getElementById('form3Example4cd');
 
     var userObj = {
-        name : userName,
-        email : userEmail,
-        password : userpass,
-        repeatPassword : repeatPass
+        name : userName.value,
+        email : userEmail.value,
+        password : userpass.value,
+        repeatPassword : repeatPass.value
     }
-
-    user_data.push(userObj);
-
     
-    userName = '';
-    userEmail = '';
-    userpass = '';
-    repeatPass = '';
+    user_data.push(userObj);
+    
+    
+    userName.value = '';
+    userEmail.value = '';
+    userpass.value = '';
+    repeatPass.value = '';
+
     
     localStorage.setItem('users' , JSON.stringify(user_data));
-    // var fetching_data = JSON.parse(localStorage.getItem('users'));
-    // fetching_data.push(userObj);
+    var fetching_data = JSON.parse(localStorage.getItem('users'));
+    user_data.push(fetching_data);
     
+
     window.location.href = "./login.html";
+      
+  
+
 })
 }
 
