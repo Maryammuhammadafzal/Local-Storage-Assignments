@@ -26,7 +26,9 @@ submitBtn && submitBtn.addEventListener('click' , function(){
     userpass = '';
     repeatPass = '';
     
-    localStorage.setItem('user data' , JSON.stringify(user_data));
+    localStorage.setItem('users' , JSON.stringify(user_data));
+    // var fetching_data = JSON.parse(localStorage.getItem('users'));
+    // fetching_data.push(userObj);
     
     window.location.href = "./login.html";
 })
@@ -34,20 +36,72 @@ submitBtn && submitBtn.addEventListener('click' , function(){
 
 submit();
 
-function login(){
-    var loginBtn = document.getElementById('signin-btn');
+var loginBtn = document.getElementById('login-btn');
+async function login(){
     
-    loginBtn && loginBtn.addEventListener('click' , function(){
-        var loginEmail = document.getElementById('loginEmail').value;
-        var loginpass = document.getElementById('loginPassword').value;
-    
-        
+    loginBtn && loginBtn.addEventListener('click' ,async function(){
+        var loginEmail = document.getElementById('loginEmail');
+        var loginpass = document.getElementById('loginPassword');
+
+        var users = JSON.parse(localStorage.getItem('users'));
+
+        for(var user of users){
+            if (user.email != loginEmail ) {
+                const { value: email } = await Swal.fire({
+                    title: "Wrong email address",
+                    input: "email",
+                    inputLabel: "Your email address",
+                    inputPlaceholder: `${loginEmail}`
+                  });
+                  if (email) {
+                    Swal.fire(`Entered email: ${email}`);
+                  }
+
+                if(loginpass != user.password){
+                    const { value: password } = await Swal.fire({
+                        title: "Wrong password",
+                        input: "password",
+                        inputLabel: "Password",
+                        inputPlaceholder: `${loginpass}`,
+                        inputAttributes: {
+                          maxlength: "10",
+                          autocapitalize: "off",
+                          autocorrect: "off"
+                        }
+                      });
+                      if (password) {
+                        Swal.fire(`Entered password: ${password}`);
+                      }
+                }else{
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                          toast.onmouseenter = Swal.stopTimer;
+                          toast.onmouseleave = Swal.resumeTimer;
+                        }
+                      });
+                      Toast.fire({
+                        icon: "success",
+                        title: "Signed in successfully"
+                      });
+                }  
+                
+            }else{
+                alert('login successfully')
+            }
+        }
        
         loginEmail = '';
         loginpass = '';
         
-        localStorage.setItem('user data' , JSON.stringify(user_data));
+        // localStorage.setItem('user data' , JSON.stringify(user_data));
         
-        window.location.href = "./login.html";
+        window.location.href = "./dashboard.html";
     })
     }
+
+login()    
