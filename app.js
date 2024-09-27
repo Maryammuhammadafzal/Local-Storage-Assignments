@@ -1,38 +1,43 @@
+
 //Array of User Data 
 var user_data = [];
 
-// Functions
+// Sign Up Button
 var submitBtn = document.getElementById('submit-btn');
+
+// Functions of Submit Button 
 function submit(){
+  
+  submitBtn && submitBtn.addEventListener('click' , function(){
+    var userName = document.getElementById('form3Example1c').value;
+    var userEmail = document.getElementById('form3Example3c').value;
+    var userpass = document.getElementById('form3Example4c').value;
+    var repeatPass = document.getElementById('form3Example4cd').value;
 
-submitBtn && submitBtn.addEventListener('click' , function(){
-    var userName = document.getElementById('form3Example1c');
-    var userEmail = document.getElementById('form3Example3c');
-    var userpass = document.getElementById('form3Example4c');
-    var repeatPass = document.getElementById('form3Example4cd');
-
+    console.log(userName.value);
+    
     var userObj = {
-        name : userName.value,
-        email : userEmail.value,
-        password : userpass.value,
-        repeatPassword : repeatPass.value
+        name : userName,
+        email : userEmail,
+        password : userpass,
+        repeatPassword : repeatPass
     }
     
     user_data.push(userObj);
     
     
-    userName.value = '';
-    userEmail.value = '';
-    userpass.value = '';
-    repeatPass.value = '';
-
+    userName = '';
+    userEmail = '';
+    userpass = '';
+    repeatPass = '';
+    
     
     localStorage.setItem('users' , JSON.stringify(user_data));
     var fetching_data = JSON.parse(localStorage.getItem('users'));
     user_data.push(fetching_data);
     
-
-    window.location.href = "./login.html";
+    
+    window.location.href = "login.html";
       
   
 
@@ -42,8 +47,16 @@ submitBtn && submitBtn.addEventListener('click' , function(){
 submit();
 
 var loginBtn = document.getElementById('login-btn');
+
+// login function
 async function login(){
-    
+
+  if(window.location.href === "login.html"){
+    submitBtn && submitBtn.addEventListener('click' , function(){
+      window.location.href = "index.html"
+    })
+  }  
+ 
     loginBtn && loginBtn.addEventListener('click' ,async function(){
         var loginEmail = document.getElementById('loginEmail');
         var loginpass = document.getElementById('loginPassword');
@@ -109,4 +122,12 @@ async function login(){
     })
     }
 
-login()    
+ 
+login();
+
+
+// else if(window.location.href == "index.html"){
+//   submitBtn && submitBtn.addEventListener('click' , function(){
+//     window.location.href == "index.html"
+//   })
+// }  
